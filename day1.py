@@ -8,6 +8,8 @@ xtwone3four
 zoneight234
 7pqrstsixteen'''
 
+test_input = test_input.split('\n')
+
 numbers = {
     "one":1,
     "two":2,
@@ -21,30 +23,25 @@ numbers = {
 }
 
 with open("day1.txt") as f:
-    data = f.read()
+    data = f.read().split('\n')
 
 def day1task2(data):
-    split_test = data.split('\n')
-
     no_numbers = []
 
-    for line in split_test:
+    for line in data:
         no_numbers.append(re.findall("(?=([1-9]|one|two|three|four|five|six|seven|eight|nine))",line))
 
     total = 0
 
     for line in no_numbers:
         number = ''
-        pattern = "[1-9]"
-        if bool(re.search(pattern, line[0]))==False:
-            number+=str(numbers[line[0]])
-        else:
-            number+=line[0]
-
-        if bool(re.search(pattern, line[-1]))==False:
-            number+=str(numbers[line[-1]])
-        else:
-            number+=line[-1]
+        index_we_want = [0,-1]
+        
+        for i in index_we_want:
+            if line[i].isdigit():
+                number+=line[i]
+            else:
+                number+=str(numbers[line[i]])
         
         total+=int(number)
     
