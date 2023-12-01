@@ -28,9 +28,7 @@ split_test = data.split('\n')
 no_numbers = []
 
 for line in split_test:
-    no_numbers.append(re.findall("[1-9]|one|two|three|four|five|six|seven|eight|nine",line))
-
-
+    no_numbers.append(re.findall("(?=([1-9]|one|two|three|four|five|six|seven|eight|nine))",line))
 
 total = 0
 
