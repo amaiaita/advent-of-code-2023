@@ -11,8 +11,6 @@ TEST_INPUT = TEST_INPUT.split("\n")
 with open("day2.txt") as f:
     data = f.read().split("\n")
 
-max_color_values = {"red": 12, "green": 13, "blue": 14}
-
 
 def day2task1(data):
     valid_games = []
@@ -22,19 +20,20 @@ def day2task1(data):
     for i, game in enumerate(data):
         valid_round = 0
         for game_round in game:
-            red = game_round.find("red")
-            blue = game_round.find("blue")
-            green = game_round.find("green")
+            red = re.findall(r"(\d+)\s+red", game_round)
+            blue = re.findall(r"(\d+)\s+blue", game_round)
+            green = re.findall(r"(\d+)\s+green", game_round)
 
-            if red != -1:
-                if int(re.findall(r"(\d+)\s+red", game_round)[0]) > 12:
+            if len(red) > 0:
+                if int(red[0]) > 12:
                     valid_round += 1
-            if green != -1:
-                if int(re.findall(r"(\d+)\s+green", game_round)[0]) > 13:
+            if len(green) > 0:
+                if int(green[0]) > 13:
                     valid_round += 1
-            if blue != -1:
-                if int(re.findall(r"(\d+)\s+blue", game_round)[0]) > 14:
+            if len(blue) > 0:
+                if int(blue[0]) > 14:
                     valid_round += 1
+
         if valid_round == 0:
             valid_games.append(i + 1)
 
@@ -51,20 +50,20 @@ def day2task2(data):
         max_color_values = {"red": 0, "green": 0, "blue": 0}
 
         for game_round in game:
-            red = game_round.find("red")
-            blue = game_round.find("blue")
-            green = game_round.find("green")
+            red = re.findall(r"(\d+)\s+red", game_round)
+            blue = re.findall(r"(\d+)\s+blue", game_round)
+            green = re.findall(r"(\d+)\s+green", game_round)
 
-            if red != -1:
-                num_red = int(re.findall(r"(\d+)\s+red", game_round)[0])
+            if len(red) > 0:
+                num_red = int(red[0])
                 if num_red > max_color_values["red"]:
                     max_color_values["red"] = num_red
-            if green != -1:
-                num_green = int(re.findall(r"(\d+)\s+green", game_round)[0])
+            if len(green) > 0:
+                num_green = int(green[0])
                 if num_green > max_color_values["green"]:
                     max_color_values["green"] = num_green
-            if blue != -1:
-                num_blue = int(re.findall(r"(\d+)\s+blue", game_round)[0])
+            if len(blue) > 0:
+                num_blue = int(blue[0])
                 if num_blue > max_color_values["blue"]:
                     max_color_values["blue"] = num_blue
 
