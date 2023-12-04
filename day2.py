@@ -19,28 +19,62 @@ def day2task1(data):
     for i, line in enumerate(data):
         data[i] = line[line.find(":") + 2 :].split(";")
 
-    for i,game in enumerate(data):
+    for i, game in enumerate(data):
         valid_round = 0
         for game_round in game:
-            
-            red = game_round.find('red')
-            blue = game_round.find('blue')
-            green = game_round.find('green')
+            red = game_round.find("red")
+            blue = game_round.find("blue")
+            green = game_round.find("green")
 
-            if red!=-1:
-                if int(re.findall(r'(\d+)\s+red',game_round)[0])>12:
-                    valid_round+=1
-            if green!=-1:
-                if int(re.findall(r'(\d+)\s+green',game_round)[0])>13:
-                    valid_round+=1
-            if blue!=-1:
-                if int(re.findall(r'(\d+)\s+blue',game_round)[0])>14:
-                    valid_round+=1
-        if valid_round==0:
-            valid_games.append(i+1)
-        
+            if red != -1:
+                if int(re.findall(r"(\d+)\s+red", game_round)[0]) > 12:
+                    valid_round += 1
+            if green != -1:
+                if int(re.findall(r"(\d+)\s+green", game_round)[0]) > 13:
+                    valid_round += 1
+            if blue != -1:
+                if int(re.findall(r"(\d+)\s+blue", game_round)[0]) > 14:
+                    valid_round += 1
+        if valid_round == 0:
+            valid_games.append(i + 1)
 
     return sum(valid_games)
 
 
-print(day2task1(data))
+def day2task2(data):
+    total_power = 0
+
+    for i, line in enumerate(data):
+        data[i] = line[line.find(":") + 2 :].split(";")
+
+    for i, game in enumerate(data):
+        max_color_values = {"red": 0, "green": 0, "blue": 0}
+
+        for game_round in game:
+            red = game_round.find("red")
+            blue = game_round.find("blue")
+            green = game_round.find("green")
+
+            if red != -1:
+                num_red = int(re.findall(r"(\d+)\s+red", game_round)[0])
+                if num_red > max_color_values["red"]:
+                    max_color_values["red"] = num_red
+            if green != -1:
+                num_green = int(re.findall(r"(\d+)\s+green", game_round)[0])
+                if num_green > max_color_values["green"]:
+                    max_color_values["green"] = num_green
+            if blue != -1:
+                num_blue = int(re.findall(r"(\d+)\s+blue", game_round)[0])
+                if num_blue > max_color_values["blue"]:
+                    max_color_values["blue"] = num_blue
+
+        total_power += (
+            max_color_values["red"]
+            * max_color_values["green"]
+            * max_color_values["blue"]
+        )
+
+    return total_power
+
+
+print(day2task2(data))
