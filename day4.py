@@ -30,5 +30,29 @@ def day4task1(data):
             points+=2**(overlap-1)
     return points
 
+def day4task2(data):
+    pattern = re.compile(r"^Card \d+: (.*)$", re.MULTILINE)
+    data = pattern.sub(r"\1", data)
+    data = re.sub(' +',' ', data).splitlines()
 
-print(day4task1(data))
+    for i,line in enumerate(data):
+        data[i] = line.split('|')
+
+    for i, line in enumerate(data):
+        for j, half in enumerate(line):
+            data[i][j] = half.strip().split(' ')
+
+    number_of_cards = {}
+
+    for i,line in enumerate(data):
+        number_of_cards[i+1] = 1
+
+    for key,value in number_of_cards.items():
+        for k in range(value):
+            overlap = len(set(data[key-1][0])&set(data[key-1][1]))
+            for j in range(overlap):
+                number_of_cards[key+j+1]+=1
+
+    return sum(number_of_cards.values())
+
+print(day4task2(data))
